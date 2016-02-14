@@ -2,8 +2,7 @@
 //  AppDelegate.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 import Cocoa
