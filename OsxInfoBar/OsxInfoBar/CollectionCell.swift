@@ -2,12 +2,12 @@
 //  CollectionCell.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 import Cocoa
 
+//MARK: - A simple collection cell which displays a stock image and highlights on selection.
 class CollectionCell: NSCollectionViewItem {
 
     override func viewDidLoad() {

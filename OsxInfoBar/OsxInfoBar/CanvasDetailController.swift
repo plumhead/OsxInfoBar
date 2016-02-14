@@ -2,34 +2,45 @@
 //  CanvasDetailController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 
 import Cocoa
 
+//MARK: - Display 2 boxes and draw a line between the centres
 class CanvasDetailController: NSViewController, SidebarBodyElement {
     @IBOutlet weak var leftBox: NSView!
     @IBOutlet weak var rightBox: NSView!
     @IBOutlet var box: BoxView!
     
-    lazy var _sidebar : SidebarElementContainer? = {
+    // Use the ImageHeader sidebar
+    lazy var _sidebar1 : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
         guard let h = sb.instantiateControllerWithIdentifier("ImageHeader") as? ImageSidebarHeaderController else {
             return .None
         }
 
         h.configure(TextSidebarHeader(content: "This is a header view with quite a long title which extends over multiple lines with word wrapping taking place to ensure all text is viewable as expected. This header changes colour depending on current state"))
-        return SidebarElementContainer(key: "Canvas", header: h, body: self, state: .Open, hasSeparator: true)
+        return SidebarElementContainer(key: "Canvas1", header: h, body: self, state: .Open, hasSeparator: true)
     }()
     
-    var sidebar         : SidebarElementContainer? {return _sidebar}
+    // Use the Standard Labelled Header Sidebar
+    lazy var _sidebar2 : SidebarElementContainer? = {
+        let sb = NSStoryboard(name: "Headers", bundle: nil)
+        guard let h = sb.instantiateControllerWithIdentifier("StandardHeader") as? StandardSidebarHeaderController else {
+            return .None
+        }
+        
+        h.configure(SimpleLabelledSidebarHeader(title: "Canvas", showLabel: "show", hideLabel: "hide"))
+        return SidebarElementContainer(key: "Canvas2", header: h, body: self, state: .Open, hasSeparator: true)
+    }()
+
+    var useSidebar1 : Bool = true // setup which sidebar header to use.
+    var sidebar         : SidebarElementContainer? {return useSidebar1 ? _sidebar1 : _sidebar2}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-        
         
         self.view.wantsLayer = true
         self.view.layer?.backgroundColor = NSColor.whiteColor().CGColor

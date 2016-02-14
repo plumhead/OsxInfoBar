@@ -2,32 +2,32 @@
 //  StandardSidebarHeaderController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 import Cocoa
 
-class StandardSidebarHeaderController : NSViewController, SidebarHeaderElement {
+//MARK: - A standard header with a title and a show/hide button
+class StandardSidebarHeaderController : NSViewController {
     @IBOutlet weak var headerText: NSTextField!
     @IBOutlet weak var showHideBtn: NSButton!
     
     var _presenter   : SimpleLabelledSidebarHeader? {
         didSet {
-        guard viewLoaded else {return}
-        headerText.stringValue = _presenter?.title ?? ""
+            guard viewLoaded else {return}
+            headerText.stringValue = _presenter?.title ?? ""
         }
     }
     
-    var toggle       : (() -> ())?
+    var toggle       : (() -> ())? // will be set by the sidebar controller to an appropriate action
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         
         self.view.wantsLayer = true
         self.view.layer?.backgroundColor = NSColor.controlColor().CGColor
         
+        // Track mouse movement within the header so we can show or hide the show/hide button
         let tracker = NSTrackingArea(rect: self.view.bounds, options: [NSTrackingAreaOptions.MouseEnteredAndExited, NSTrackingAreaOptions.ActiveAlways, NSTrackingAreaOptions.InVisibleRect], owner: self , userInfo: nil)
         self.view.addTrackingArea(tracker)
     }
@@ -47,7 +47,8 @@ class StandardSidebarHeaderController : NSViewController, SidebarHeaderElement {
     }
 }
 
-extension StandardSidebarHeaderController  {
+//MARK: - SidebarHeaderElement implementation
+extension StandardSidebarHeaderController : SidebarHeaderElement {
     func configure(p: HeaderDetailPresentable) -> Bool {
         guard let pr = p as? SimpleLabelledSidebarHeader else {return false}
         _ = self.view

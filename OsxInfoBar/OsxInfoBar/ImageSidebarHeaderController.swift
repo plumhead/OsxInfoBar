@@ -2,13 +2,13 @@
 //  ImageSidebarHeaderController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 import Cocoa
 
-class ImageSidebarHeaderController: NSViewController, SidebarHeaderElement {
+//MARK: - A sidebar header with an image and some text content
+class ImageSidebarHeaderController: NSViewController {
     @IBOutlet weak var titleLabel: NSTextField!
     
     var _presenter : TextSidebarHeader? {
@@ -18,12 +18,12 @@ class ImageSidebarHeaderController: NSViewController, SidebarHeaderElement {
         }
     }
     
+    // Users of this header will assign an appropriate toggle function.
     var toggle       : (() -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.wantsLayer = true
-        
     }
     
     @IBAction func showHidePressed(sender: AnyObject) {
@@ -31,8 +31,10 @@ class ImageSidebarHeaderController: NSViewController, SidebarHeaderElement {
     }
 }
 
-extension ImageSidebarHeaderController {
+//MARK: - SidebarHeader implementation
+extension ImageSidebarHeaderController : SidebarHeaderElement {
     func configure(p: HeaderDetailPresentable) -> Bool {
+        // We could initialise this header with different types - at the moment just accept the TextSidebarHeader
         guard let pr = p as? TextSidebarHeader else {return false}
         _ = self.view
         _presenter = pr

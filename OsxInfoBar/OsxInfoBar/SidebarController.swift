@@ -2,8 +2,7 @@
 //  SidebarController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 
@@ -23,22 +22,20 @@ class SidebarController: NSViewController , SidebarHost {
     //MARK: - View Initialisation
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         
         let sb = NSStoryboard(name: "Sidebars", bundle: nil)
         let sb1 = sb.instantiateControllerWithIdentifier("DocumentSidebar") as? DocumentDetailSidebar
-        let _ = sb1?.view // force load
         
         let sb2 = sb.instantiateControllerWithIdentifier("CanvasSidebar") as? CanvasDetailController
-        let _ = sb2?.view // force load
         
         let sb3 = sb.instantiateControllerWithIdentifier("TableSidebar") as? TableDetailController
-        let _ = sb3?.view // force load
         
         let sb4 = sb.instantiateControllerWithIdentifier("CollectionSidebar") as? CollectionDetailController
-        let _ = sb4?.view // force load
+ 
+        let sb5 = sb.instantiateControllerWithIdentifier("CanvasSidebar") as? CanvasDetailController
+        sb5?.useSidebar1 = false
         
-        _ = [sb1!.sidebar, sb4!.sidebar, sb2!.sidebar, sb3!.sidebar]
+        _ = [sb1?.sidebar, sb4?.sidebar, sb2?.sidebar, sb3?.sidebar, sb5?.sidebar]
             .flatMap{$0}
             .map{ addSidebar($0) }
         

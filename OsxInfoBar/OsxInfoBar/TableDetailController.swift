@@ -2,11 +2,11 @@
 //  TableDetailController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 import Cocoa
 
+//MARK: - Display a simple table of text which adjusts to ensure content all visible in view.
 class TableDetailController: NSViewController {
     @IBOutlet weak var targetTable: NSScrollView!
     @IBOutlet weak var contentTable: NSTableView!
@@ -17,8 +17,8 @@ class TableDetailController: NSViewController {
             return .None
         }
 
-        h.configure(SimpleLabelledSidebarHeader(title: "Structure", showLabel: "show", hideLabel: "hide"))
-        return SidebarElementContainer(key: "Structure", header: h, body: self, state: .Collapsed, hasSeparator: true)
+        h.configure(SimpleLabelledSidebarHeader(title: "Table", showLabel: "show", hideLabel: "hide"))
+        return SidebarElementContainer(key: "Table", header: h, body: self, state: .Collapsed, hasSeparator: true)
     }()
     
     var sidebar         : SidebarElementContainer? {return _sidebar}
@@ -37,7 +37,7 @@ class TableDetailController: NSViewController {
 }
 
 
-
+//MARK: - Table View Data Source Implementation
 extension TableDetailController : NSTableViewDataSource {
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
         return numrows
@@ -48,19 +48,16 @@ extension TableDetailController : NSTableViewDataSource {
             return .None
         }
         
-        cell.textField?.stringValue = "I am row \(row) with a long description which may wrap around the cell if the table width is adjusted"
-        
+        cell.textField?.stringValue = "This is row \(row)"
         return cell
     }
 }
 
+// MARK: - Table View Delegate Implementation
+extension TableDetailController : NSTableViewDelegate {}
 
-extension TableDetailController : NSTableViewDelegate {
-}
-
-
+//MARK: - Make sure that when the 'host' canvas changes size the table content height is adjusted accordingly
 extension TableDetailController : SidebarBodyElement {
-    
     func fixTableSize() {
         if let hc = tableHeightConstraint {
             self.view.removeConstraints(hc)
@@ -72,7 +69,7 @@ extension TableDetailController : SidebarBodyElement {
         self.view.addConstraints(tableHeightConstraint!)
     }
     
-    func contentWillExpand() {
+    func canvas(canvas: NSView, frameUpdated f: NSRect) {
         fixTableSize()
     }
 }

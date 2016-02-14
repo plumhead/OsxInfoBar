@@ -2,12 +2,12 @@
 //  DocumentDetailController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 import Cocoa
 
+//MARK: - A simple data entry view controller
 class DocumentDetailSidebar: NSViewController , SidebarBodyElement{
     lazy var _sidebar : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
@@ -25,6 +25,6 @@ class DocumentDetailSidebar: NSViewController , SidebarBodyElement{
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.orangeColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.controlColor().CGColor
     }
 }

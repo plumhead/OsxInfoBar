@@ -2,13 +2,13 @@
 //  CollectionDetailController.swift
 //  OsxInfoBar
 //
-//  Created by Plumhead on 14/02/2016.
-//  Copyright © 2016 Andy Calderbank. All rights reserved.
+//  Created by @PlumheadDev on 14/02/2016.
 //
 
 
 import Cocoa
 
+//MARK: - Display a collection of images and adjust the size of the view so that all elements are visible.
 class CollectionDetailController: NSViewController {
     @IBOutlet weak var collection: NSCollectionView!
     @IBOutlet weak var scroller: NSScrollView!
@@ -33,7 +33,7 @@ class CollectionDetailController: NSViewController {
         self.view.wantsLayer = true
         self.view.layer?.backgroundColor = NSColor.clearColor().CGColor
         
-        
+        // Must register the cell we're going to use for display in the collection.
         self.collection.registerClass(CollectionCell.self , forItemWithIdentifier: "CollectionCell")
         
         collection.reloadData()
@@ -77,10 +77,6 @@ extension CollectionDetailController : SidebarBodyElement {
     }
     
     func canvas(canvas: NSView, frameUpdated f: NSRect) {
-        fixHeight()
-    }
-    
-    func contentWillExpand() {
         fixHeight()
     }
 }

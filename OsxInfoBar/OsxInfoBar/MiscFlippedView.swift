@@ -7,6 +7,7 @@
 
 import Cocoa
 
+// We use these to adjust the origin of stack and scroll views
 class FlippedStack : NSStackView {
     override var flipped : Bool {return true}
 }
