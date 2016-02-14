@@ -32,7 +32,7 @@ protocol ResizableViewHost {
 }
 
 //MARK: - Controlling Protocol for Sidebar headers
-protocol SidebarHeaderElement : class , ResizableViewHost{
+protocol SidebarHeaderElement : class , ResizableViewHost {
     var controller   : NSViewController {get}
     var toggle       : (() -> ())? {get set}
     
@@ -166,6 +166,10 @@ extension SidebarHost {
             v.body.resized(canvas, toFrame: f)
         }
     }
+}
+
+extension SidebarHost where Self : NSViewController {
+    var hostController : NSViewController {return self}    
 }
 
 //MARK: - An NSStackView implementation of the SidebarHost addSidebar.

@@ -17,7 +17,6 @@ class SidebarController: NSViewController , SidebarHost {
     typealias ViewType = NSStackView
     var content : [String:SidebarElementContainer] = [:]
     var hostView : NSStackView {return stack}
-    var hostController : NSViewController {return self}
     
     //MARK: - View Initialisation
     override func viewDidLoad() {

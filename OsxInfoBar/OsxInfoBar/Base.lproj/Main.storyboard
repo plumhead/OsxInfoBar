@@ -666,10 +666,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Document View-->
         <scene sceneID="kph-Wq-pSq">
             <objects>
-                <splitViewController id="Jt5-5L-wcH" customClass="ViewController" customModule="OsxInfoBar" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController title="Document View" id="Jt5-5L-wcH" customClass="ViewController" customModule="OsxInfoBar" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="HqH-Nn-CTp"/>
                         <splitViewItem id="HL7-e2-m0m"/>
@@ -687,10 +687,10 @@
             </objects>
             <point key="canvasLocation" x="77" y="745"/>
         </scene>
-        <!--View Controller-->
+        <!--Editor-->
         <scene sceneID="rrC-Ra-AKf">
             <objects>
-                <viewController id="fkA-Eq-PhR" sceneMemberID="viewController">
+                <viewController title="Editor" id="fkA-Eq-PhR" sceneMemberID="viewController">
                     <view key="view" id="bBJ-uS-Yk2">
                         <rect key="frame" x="0.0" y="0.0" width="260" height="155"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -738,7 +738,7 @@
                 </viewController>
                 <customObject id="cNH-Aj-Ypa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="77" y="1182.5"/>
+            <point key="canvasLocation" x="77" y="1136.5"/>
         </scene>
         <!--Sidebar Controller-->
         <scene sceneID="pk8-NG-Akl">
@@ -769,7 +769,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="39l-sD-gFI">
-                                    <rect key="frame" x="227" y="1" width="15" height="298"/>
+                                    <rect key="frame" x="226" y="1" width="16" height="298"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -788,7 +788,7 @@
                 </viewController>
                 <customObject id="DhO-km-sdV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="664.5" y="745"/>
+            <point key="canvasLocation" x="531.5" y="745"/>
         </scene>
     </scenes>
 </document>
