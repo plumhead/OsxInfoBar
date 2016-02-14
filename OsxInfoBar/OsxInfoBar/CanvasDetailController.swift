@@ -55,7 +55,7 @@ class CanvasDetailController: NSViewController, SidebarBodyElement {
 
 
 extension CanvasDetailController {
-    func canvas(canvas: NSView, frameUpdated f: NSRect) {
+    func resized(canvas: NSView, toFrame f: NSRect) {
         let p1 = NSPoint(x: leftBox.frame.midX, y: leftBox.frame.midY)
         let p2 = NSPoint(x: rightBox.frame.midX, y: rightBox.frame.midY)
         box.points = (p1,p2)

@@ -69,7 +69,7 @@ extension TableDetailController : SidebarBodyElement {
         self.view.addConstraints(tableHeightConstraint!)
     }
     
-    func canvas(canvas: NSView, frameUpdated f: NSRect) {
+    func resized(canvas: NSView, toFrame f: NSRect) {
         fixTableSize()
     }
 }

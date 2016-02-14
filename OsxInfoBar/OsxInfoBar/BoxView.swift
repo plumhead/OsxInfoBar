@@ -10,9 +10,7 @@ import Cocoa
 class BoxView: NSView {
     
     var points : (NSPoint,NSPoint)? {
-        didSet {
-        self.needsDisplay = true
-        }
+        didSet {self.needsDisplay = true}
     }
     
     override func drawRect(dirtyRect: NSRect) {

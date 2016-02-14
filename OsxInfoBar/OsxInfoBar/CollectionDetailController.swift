@@ -76,7 +76,7 @@ extension CollectionDetailController : SidebarBodyElement {
         self.view.addConstraints(heightConstraint!)
     }
     
-    func canvas(canvas: NSView, frameUpdated f: NSRect) {
+    func resized(canvas: NSView, toFrame f: NSRect) {
         fixHeight()
     }
 }

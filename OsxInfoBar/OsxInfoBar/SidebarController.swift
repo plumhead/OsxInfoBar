@@ -43,6 +43,6 @@ class SidebarController: NSViewController , SidebarHost {
     }
     
     @IBAction func viewFrameChanged(obj: AnyObject) {
-        canvas(self.view, frameUpdated: self.view.frame)
+        resized(self.view, toFrame: self.view.frame)
     }
 }
