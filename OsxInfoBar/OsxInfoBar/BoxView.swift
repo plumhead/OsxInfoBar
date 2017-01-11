@@ -13,16 +13,16 @@ class BoxView: NSView {
         didSet {self.needsDisplay = true}
     }
     
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
         guard let p = points else {return}
         
         let line = NSBezierPath()
         line.lineWidth = 5.0
-        line.lineCapStyle = NSLineCapStyle.RoundLineCapStyle
-        NSColor.blueColor().setStroke()
-        line.moveToPoint(p.0)
-        line.lineToPoint(p.1)
+        line.lineCapStyle = NSLineCapStyle.roundLineCapStyle
+        NSColor.blue.setStroke()
+        line.move(to: p.0)
+        line.line(to: p.1)
         line.stroke()
     }
     

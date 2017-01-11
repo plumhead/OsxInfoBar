@@ -14,7 +14,7 @@ class StandardSidebarHeaderController : NSViewController {
     
     var _presenter   : SimpleLabelledSidebarHeader? {
         didSet {
-            guard viewLoaded else {return}
+            guard isViewLoaded else {return}
             headerText.stringValue = _presenter?.title ?? ""
         }
     }
@@ -25,31 +25,31 @@ class StandardSidebarHeaderController : NSViewController {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.controlColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.controlColor.cgColor
         
         // Track mouse movement within the header so we can show or hide the show/hide button
-        let tracker = NSTrackingArea(rect: self.view.bounds, options: [NSTrackingAreaOptions.MouseEnteredAndExited, NSTrackingAreaOptions.ActiveAlways, NSTrackingAreaOptions.InVisibleRect], owner: self , userInfo: nil)
+        let tracker = NSTrackingArea(rect: self.view.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways, NSTrackingAreaOptions.inVisibleRect], owner: self , userInfo: nil)
         self.view.addTrackingArea(tracker)
     }
     
-    @IBAction func showHidePressed(sender: AnyObject) {
+    @IBAction func showHidePressed(_ sender: AnyObject) {
         toggle?()
     }
     
-    override func mouseEntered(theEvent: NSEvent) {
-        super.mouseEntered(theEvent)
-        showHideBtn.hidden = false
+    override func mouseEntered(with theEvent: NSEvent) {
+        super.mouseEntered(with: theEvent)
+        showHideBtn.isHidden = false
     }
     
-    override func mouseExited(theEvent: NSEvent) {
-        super.mouseExited(theEvent)
-        showHideBtn.hidden = true
+    override func mouseExited(with theEvent: NSEvent) {
+        super.mouseExited(with: theEvent)
+        showHideBtn.isHidden = true
     }
 }
 
 //MARK: - SidebarHeaderElement implementation
 extension StandardSidebarHeaderController : SidebarHeaderElement {
-    func configure(p: HeaderDetailPresentable) -> Bool {
+    @discardableResult func configure(_ p: HeaderDetailPresentable) -> Bool {
         guard let pr = p as? SimpleLabelledSidebarHeader else {return false}
         _ = self.view
         _presenter = pr
@@ -58,8 +58,8 @@ extension StandardSidebarHeaderController : SidebarHeaderElement {
     
     func update(toViewState vs : SidebarState) {
         switch vs {
-        case .Open: showHideBtn.title = _presenter?.hideLabel ?? ""
-        case .Collapsed: showHideBtn.title = _presenter?.showLabel ?? ""
+        case .open: showHideBtn.title = _presenter?.hideLabel ?? ""
+        case .collapsed: showHideBtn.title = _presenter?.showLabel ?? ""
         }
     }
 }

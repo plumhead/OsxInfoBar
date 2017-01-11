@@ -15,11 +15,11 @@ class CollectionDetailController: NSViewController {
     
     lazy var _sidebar : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
-        guard let h = sb.instantiateControllerWithIdentifier("StandardHeader") as? StandardSidebarHeaderController else {
-            return .None
+        guard let h = sb.instantiateController(withIdentifier: "StandardHeader") as? StandardSidebarHeaderController else {
+            return .none
         }
         h.configure(SimpleLabelledSidebarHeader(title: "Images", showLabel: "display", hideLabel: "hide"))
-        return SidebarElementContainer(key: "Images", header: h, body: self, state: .Open, hasSeparator: true)
+        return SidebarElementContainer(key: "Images", header: h, body: self, state: .open, hasSeparator: true)
     }()
     
     var sidebar         : SidebarElementContainer? {return _sidebar}
@@ -31,10 +31,10 @@ class CollectionDetailController: NSViewController {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.clearColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.clear.cgColor
         
         // Must register the cell we're going to use for display in the collection.
-        self.collection.registerClass(CollectionCell.self , forItemWithIdentifier: "CollectionCell")
+        self.collection.register(CollectionCell.self , forItemWithIdentifier: "CollectionCell")
         
         collection.reloadData()
         fixHeight()
@@ -43,17 +43,17 @@ class CollectionDetailController: NSViewController {
 
 //MARK: - Collection View Data Source
 extension CollectionDetailController : NSCollectionViewDataSource {
-    func collectionView(collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return numelements
     }
     
-    func numberOfSectionsInCollectionView(collectionView: NSCollectionView) -> Int {
+    func numberOfSections(in collectionView: NSCollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         
-        let cell = collectionView.makeItemWithIdentifier("CollectionCell", forIndexPath: indexPath) as! CollectionCell
+        let cell = collectionView.makeItem(withIdentifier: "CollectionCell", for: indexPath) as! CollectionCell
         
         return cell
     }
@@ -72,11 +72,11 @@ extension CollectionDetailController : SidebarBodyElement {
         let size = collection.collectionViewLayout?.collectionViewContentSize
         let preferredSize = size!.height
         let m = ["height":preferredSize]
-        heightConstraint = NSLayoutConstraint.constraintsWithVisualFormat("V:|[v(==height)]|", options: NSLayoutFormatOptions(), metrics: m, views: ["v":scroller])
+        heightConstraint = NSLayoutConstraint.constraints(withVisualFormat: "V:|[v(==height)]|", options: NSLayoutFormatOptions(), metrics: m as [String : NSNumber]?, views: ["v":scroller])
         self.view.addConstraints(heightConstraint!)
     }
     
-    func resized(canvas: NSView, toFrame f: NSRect) {
+    func resized(_ canvas: NSView, toFrame f: NSRect) {
         fixHeight()
     }
 }

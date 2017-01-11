@@ -11,12 +11,12 @@ import Cocoa
 class DocumentDetailSidebar: NSViewController , SidebarBodyElement{
     lazy var _sidebar : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
-        guard let h = sb.instantiateControllerWithIdentifier("StandardHeader") as? StandardSidebarHeaderController else {
-            return .None
+        guard let h = sb.instantiateController(withIdentifier: "StandardHeader") as? StandardSidebarHeaderController else {
+            return .none
         }
         
         h.configure(SimpleLabelledSidebarHeader(title: "Document Options", showLabel: "show", hideLabel: "hide"))
-        return SidebarElementContainer(key: "Document", header: h, body: self, state: .Open, hasSeparator: true)
+        return SidebarElementContainer(key: "Document", header: h, body: self, state: .open, hasSeparator: true)
     }()
     
     var sidebar         : SidebarElementContainer? {return _sidebar}
@@ -25,6 +25,6 @@ class DocumentDetailSidebar: NSViewController , SidebarBodyElement{
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.controlColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.controlColor.cgColor
     }
 }

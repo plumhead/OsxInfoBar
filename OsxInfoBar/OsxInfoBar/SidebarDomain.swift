@@ -11,8 +11,8 @@ import Cocoa
 
 //MARK:- Indicates whether the content view is visible or collapsed
 enum SidebarState {
-    case Open
-    case Collapsed
+    case open
+    case collapsed
 }
 
 // MARK: - Configuration for Sidebar headers
@@ -28,7 +28,7 @@ protocol ExpandableElement {
 
 //MARK: - Represents a view which can be resized
 protocol ResizableViewHost {
-    func resized(canvas: NSView, toFrame f: NSRect)
+    func resized(_ canvas: NSView, toFrame f: NSRect)
 }
 
 //MARK: - Controlling Protocol for Sidebar headers
@@ -36,7 +36,7 @@ protocol SidebarHeaderElement : class , ResizableViewHost {
     var controller   : NSViewController {get}
     var toggle       : (() -> ())? {get set}
     
-    @warn_unused_result func configure(p: HeaderDetailPresentable) -> Bool
+    func configure(_ p: HeaderDetailPresentable) -> Bool
     func update(toViewState vs : SidebarState)
 }
 
@@ -51,15 +51,15 @@ protocol SidebarBodyElement : class , ExpandableElement, ResizableViewHost {
 
 //MARK: - The master view (usually StackView) holding the set of sidebar containers
 protocol SidebarHost : class, ResizableViewHost {
-    typealias ViewType
+    associatedtype ViewType
     var hostView        : ViewType {get}
     var hostController  : NSViewController {get}
     var content         : [String:SidebarElementContainer] {get set}
     
-    func addSidebar(element : SidebarElementContainer) -> Bool
-    func toggle(element: SidebarElementContainer)
-    func show(element: SidebarElementContainer)
-    func hide(element: SidebarElementContainer)
+    func addSidebar(_ element : SidebarElementContainer) -> Bool
+    func toggle(_ element: SidebarElementContainer)
+    func show(_ element: SidebarElementContainer)
+    func hide(_ element: SidebarElementContainer)
 }
 
 //MARK: - A container to capture the relationship between a header and it's associated content controller
@@ -100,7 +100,7 @@ struct TextSidebarHeader  : HeaderDetailPresentable {
 
 //MARK: - Sidebar header default implementations
 extension SidebarHeaderElement {
-    func resized(canvas: NSView, toFrame f: NSRect) {} // default noop
+    func resized(_ canvas: NSView, toFrame f: NSRect) {} // default noop
 }
 
 //MARK: - Sidebar header standard controller implementations
@@ -118,49 +118,49 @@ extension ExpandableElement {
 
 //MARK: - Resizable Host default noop implementations
 extension ResizableViewHost {
-    func resized(canvas: NSView, toFrame f: NSRect) {} // default noop
+    func resized(_ canvas: NSView, toFrame f: NSRect) {} // default noop
 }
 
 extension SidebarBodyElement where Self : NSViewController {
     // If attached to a ViewController then we can provide default implementations
     // A more advanced show/hide could add effects (advanced animation etc)
-    func show() {self.view.hidden = false}
-    func hide() {self.view.hidden = true}
+    func show() {self.view.isHidden = false}
+    func hide() {self.view.isHidden = true}
     var controller : NSViewController {return self}
 }
 
 
 //MARK: - Standard SideBarHost Implementations
 extension SidebarHost {
-    func toggle(element: SidebarElementContainer) {
+    func toggle(_ element: SidebarElementContainer) {
         switch element.state {
-        case .Open: // move to collapse
+        case .open: // move to collapse
             hide(element)
-            element.state = .Collapsed
+            element.state = .collapsed
             
-        case .Collapsed : // move to open
+        case .collapsed : // move to open
             show(element)
-            element.state = .Open
+            element.state = .open
         }
         
         element.header.update(toViewState: element.state)
     }
     
-    func show(element: SidebarElementContainer) {
+    func show(_ element: SidebarElementContainer) {
         element.body.contentWillExpand()
         element.body.show()
         element.body.contentDidExpand()
-        element.header.update(toViewState: .Open)
+        element.header.update(toViewState: .open)
     }
     
-    func hide(element: SidebarElementContainer) {
+    func hide(_ element: SidebarElementContainer) {
         element.body.contentWillCollapse()
         element.body.hide()
         element.body.contentDidCollapse()
-        element.header.update(toViewState: .Collapsed)
+        element.header.update(toViewState: .collapsed)
     }
     
-    func resized(canvas: NSView, toFrame f: NSRect) {
+    func resized(_ canvas: NSView, toFrame f: NSRect) {
         for (_,v) in content {
             v.header.resized(canvas, toFrame: f)
             v.body.resized(canvas, toFrame: f)
@@ -174,7 +174,7 @@ extension SidebarHost where Self : NSViewController {
 
 //MARK: - An NSStackView implementation of the SidebarHost addSidebar.
 extension SidebarHost where ViewType == NSStackView {
-    func addSidebar(element : SidebarElementContainer) -> Bool {
+    func addSidebar(_ element : SidebarElementContainer) -> Bool {
         // Make sure we haven't already added a container with the same key
         guard content[element.key] == nil else {return false}
         
@@ -186,7 +186,7 @@ extension SidebarHost where ViewType == NSStackView {
         // If we want to add a default separator then setup here
         if element.hasSeparator {
             let box = NSBox()
-            box.boxType = NSBoxType.Separator
+            box.boxType = NSBoxType.separator
             box.translatesAutoresizingMaskIntoConstraints = false
             hostView.addArrangedSubview(box)
         }
@@ -203,8 +203,8 @@ extension SidebarHost where ViewType == NSStackView {
         
         // Fix the current state
         switch element.state {
-        case .Open      : show(element)
-        case .Collapsed : hide(element)
+        case .open      : show(element)
+        case .collapsed : hide(element)
         }
         
         // Record the
