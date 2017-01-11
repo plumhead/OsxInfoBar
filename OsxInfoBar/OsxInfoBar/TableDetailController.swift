@@ -13,12 +13,12 @@ class TableDetailController: NSViewController {
     
     lazy var _sidebar : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
-        guard let h = sb.instantiateControllerWithIdentifier("StandardHeader") as? StandardSidebarHeaderController else {
-            return .None
+        guard let h = sb.instantiateController(withIdentifier: "StandardHeader") as? StandardSidebarHeaderController else {
+            return .none
         }
 
         h.configure(SimpleLabelledSidebarHeader(title: "Table", showLabel: "show", hideLabel: "hide"))
-        return SidebarElementContainer(key: "Table", header: h, body: self, state: .Collapsed, hasSeparator: true)
+        return SidebarElementContainer(key: "Table", header: h, body: self, state: .collapsed, hasSeparator: true)
     }()
     
     var sidebar         : SidebarElementContainer? {return _sidebar}
@@ -30,7 +30,7 @@ class TableDetailController: NSViewController {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.orangeColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.orange.cgColor
         
         fixTableSize()
     }
@@ -39,13 +39,13 @@ class TableDetailController: NSViewController {
 
 //MARK: - Table View Data Source Implementation
 extension TableDetailController : NSTableViewDataSource {
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    func numberOfRows(in tableView: NSTableView) -> Int {
         return numrows
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let cell = tableView.makeViewWithIdentifier("NavCell", owner: self) as? NSTableCellView else {
-            return .None
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let cell = tableView.make(withIdentifier: "NavCell", owner: self) as? NSTableCellView else {
+            return .none
         }
         
         cell.textField?.stringValue = "This is row \(row)"
@@ -65,11 +65,11 @@ extension TableDetailController : SidebarBodyElement {
         
         let preferredSize = numrows * 20
         let m = ["height":preferredSize]
-        tableHeightConstraint = NSLayoutConstraint.constraintsWithVisualFormat("V:|[v(==height)]|", options: NSLayoutFormatOptions(), metrics: m, views: ["v":targetTable])
+        tableHeightConstraint = NSLayoutConstraint.constraints(withVisualFormat: "V:|[v(==height)]|", options: NSLayoutFormatOptions(), metrics: m as [String : NSNumber]?, views: ["v":targetTable])
         self.view.addConstraints(tableHeightConstraint!)
     }
     
-    func resized(canvas: NSView, toFrame f: NSRect) {
+    func resized(_ canvas: NSView, toFrame f: NSRect) {
         fixTableSize()
     }
 }

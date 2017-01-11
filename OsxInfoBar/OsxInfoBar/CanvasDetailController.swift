@@ -17,23 +17,23 @@ class CanvasDetailController: NSViewController, SidebarBodyElement {
     // Use the ImageHeader sidebar
     lazy var _sidebar1 : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
-        guard let h = sb.instantiateControllerWithIdentifier("ImageHeader") as? ImageSidebarHeaderController else {
-            return .None
+        guard let h = sb.instantiateController(withIdentifier: "ImageHeader") as? ImageSidebarHeaderController else {
+            return .none
         }
 
         h.configure(TextSidebarHeader(content: "This is a header view with quite a long title which extends over multiple lines with word wrapping taking place to ensure all text is viewable as expected. This header changes colour depending on current state"))
-        return SidebarElementContainer(key: "Canvas1", header: h, body: self, state: .Open, hasSeparator: true)
+        return SidebarElementContainer(key: "Canvas1", header: h, body: self, state: .open, hasSeparator: true)
     }()
     
     // Use the Standard Labelled Header Sidebar
     lazy var _sidebar2 : SidebarElementContainer? = {
         let sb = NSStoryboard(name: "Headers", bundle: nil)
-        guard let h = sb.instantiateControllerWithIdentifier("StandardHeader") as? StandardSidebarHeaderController else {
-            return .None
+        guard let h = sb.instantiateController(withIdentifier: "StandardHeader") as? StandardSidebarHeaderController else {
+            return .none
         }
         
         h.configure(SimpleLabelledSidebarHeader(title: "Canvas", showLabel: "show", hideLabel: "hide"))
-        return SidebarElementContainer(key: "Canvas2", header: h, body: self, state: .Open, hasSeparator: true)
+        return SidebarElementContainer(key: "Canvas2", header: h, body: self, state: .open, hasSeparator: true)
     }()
 
     var useSidebar1 : Bool = true // setup which sidebar header to use.
@@ -43,19 +43,19 @@ class CanvasDetailController: NSViewController, SidebarBodyElement {
         super.viewDidLoad()
         
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        self.view.layer?.backgroundColor = NSColor.white.cgColor
         
         leftBox.wantsLayer = true
-        leftBox.layer?.backgroundColor = NSColor(calibratedRed: 0.0, green: 1.0, blue: 0.0, alpha: 0.25).CGColor
+        leftBox.layer?.backgroundColor = NSColor(calibratedRed: 0.0, green: 1.0, blue: 0.0, alpha: 0.25).cgColor
         
         rightBox.wantsLayer = true
-        rightBox.layer?.backgroundColor = NSColor(calibratedRed: 0.0, green: 0.0, blue: 1.0, alpha: 0.25).CGColor
+        rightBox.layer?.backgroundColor = NSColor(calibratedRed: 0.0, green: 0.0, blue: 1.0, alpha: 0.25).cgColor
     }
 }
 
 
 extension CanvasDetailController {
-    func resized(canvas: NSView, toFrame f: NSRect) {
+    func resized(_ canvas: NSView, toFrame f: NSRect) {
         let p1 = NSPoint(x: leftBox.frame.midX, y: leftBox.frame.midY)
         let p2 = NSPoint(x: rightBox.frame.midX, y: rightBox.frame.midY)
         box.points = (p1,p2)

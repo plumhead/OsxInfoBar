@@ -13,7 +13,7 @@ class ImageSidebarHeaderController: NSViewController {
     
     var _presenter : TextSidebarHeader? {
         didSet {
-        guard viewLoaded else {return}
+        guard isViewLoaded else {return}
         titleLabel.stringValue = _presenter?.content ?? ""
         }
     }
@@ -26,14 +26,14 @@ class ImageSidebarHeaderController: NSViewController {
         self.view.wantsLayer = true
     }
     
-    @IBAction func showHidePressed(sender: AnyObject) {
+    @IBAction func showHidePressed(_ sender: AnyObject) {
         toggle?()
     }
 }
 
 //MARK: - SidebarHeader implementation
 extension ImageSidebarHeaderController : SidebarHeaderElement {
-    func configure(p: HeaderDetailPresentable) -> Bool {
+    @discardableResult func configure(_ p: HeaderDetailPresentable) -> Bool {
         // We could initialise this header with different types - at the moment just accept the TextSidebarHeader
         guard let pr = p as? TextSidebarHeader else {return false}
         _ = self.view
@@ -43,11 +43,11 @@ extension ImageSidebarHeaderController : SidebarHeaderElement {
     
     func update(toViewState vs : SidebarState) {
         switch vs {
-        case .Open:
-            self.view.layer?.backgroundColor = NSColor.greenColor().CGColor
-        case .Collapsed:
+        case .open:
+            self.view.layer?.backgroundColor = NSColor.green.cgColor
+        case .collapsed:
             let c = NSColor(calibratedRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.25)
-            self.view.layer?.backgroundColor = c.CGColor
+            self.view.layer?.backgroundColor = c.cgColor
         }
     }
 }

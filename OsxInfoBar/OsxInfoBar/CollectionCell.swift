@@ -15,10 +15,10 @@ class CollectionCell: NSCollectionViewItem {
         self.view.wantsLayer = true
     }
     
-    override var selected : Bool {
+    override var isSelected : Bool {
         didSet {
-        if selected {
-            self.view.layer?.borderColor = NSColor.greenColor().CGColor
+        if isSelected {
+            self.view.layer?.borderColor = NSColor.green.cgColor
             self.view.layer?.borderWidth = 4
         }
         else {
